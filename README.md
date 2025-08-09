@@ -34,7 +34,9 @@ https://portal.cdp.coinbase.com/
 
 2. Go to API Keys Tab and create new API Key.
 
-3. Paste your API Keys in the .env file.
+3. Create .env file in the /backend directory and copy content from .env.example
+
+4. Paste your API Keys in the .env file.
 
 
 ### Running the Applications
