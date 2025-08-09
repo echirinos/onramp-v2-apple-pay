@@ -28,6 +28,15 @@ A full-stack application with React Native Expo frontend and Node.js TypeScript 
 npm run install:all
 ```
 
+### Pre-requisites 
+1. Create a new project in CDP Portal. 
+https://portal.cdp.coinbase.com/
+
+2. Go to API Keys Tab and create new API Key.
+
+3. Paste your API Keys in the .env file.
+
+
 ### Running the Applications
 
 #### Backend Server
@@ -43,7 +52,6 @@ The backend will start on `http://localhost:3000`
 
 Available endpoints:
 - `GET /health` - Health check
-- `GET /api/hello` - Test endpoint
 
 #### Mobile App
 ```bash
@@ -60,19 +68,8 @@ This will open the Expo development tools in your browser. You can then:
 - Press `a` to open Android emulator
 - Press `w` to open in web browser
 
-### Testing Connectivity
-
-The mobile app includes a button to test connectivity with the backend. Make sure both applications are running:
-
-1. Start the backend: `npm run backend`
-2. Start the mobile app: `npm run mobile`
-3. In the mobile app, tap "Test Backend Connection"
-
-If successful, you should see "Hello from Node.js backend!" displayed in the app.
-
-
-
 ### Flow
 <p align="center">
   <img src="assets/Flow.png" alt="Onramp Workshop" width="800" height="500">
 </p>
+
