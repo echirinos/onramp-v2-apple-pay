@@ -1,0 +1,9 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "sourceMap": false,
+    "declaration": false,
+    "declarationMap": false
+  }
+}
