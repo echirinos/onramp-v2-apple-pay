@@ -64,9 +64,15 @@ cd mobile && npm start
 
 This will open the Expo development tools in your browser. You can then:
 - Scan the QR code with Expo Go app on your phone
+  - If choosing to run on the phone, then make sure to use your machine IP address in the frontend code so that your phone can make requests to your locally running backend.
+   Steps: 
+  1. Run this to get your IP address: `ipconfig getifaddr en0`
+  2. Replace `http://localhost:3000` with your IP address in the apiClient.ts file. 
+      i.e. `http://11.211.4.85:3000` 
 - Press `i` to open iOS simulator
 - Press `a` to open Android emulator
 - Press `w` to open in web browser
+
 
 ### Flow
 <p align="center">
