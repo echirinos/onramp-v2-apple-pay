@@ -66,7 +66,7 @@ export const CustomInput: React.FC<CustomInputProps> = ({
             setIsFocused(false);
             props.onBlur?.(e);
           }}
-          placeholderTextColor="#8A92B2"
+          placeholderTextColor="#9CA3AF"
         />
       </View>
       {error && <Text style={styles.errorText}>{error}</Text>}
@@ -77,58 +77,58 @@ export const CustomInput: React.FC<CustomInputProps> = ({
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    marginVertical: 8,
+    marginVertical: 12,
   },
   label: {
     fontSize: 16,
-    fontWeight: "700",
-    color: "#333",
-    marginBottom: 12,
-    letterSpacing: 0.5,
+    fontWeight: "600",
+    color: "#0A0B0D",
+    marginBottom: 8,
+    letterSpacing: -0.2,
   },
   inputContainer: {
-    borderWidth: 2,
-    borderColor: "#e9ecef",
-    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#E6EAEE",
+    borderRadius: 12,
     backgroundColor: "#ffffff",
-    paddingHorizontal: 20,
-    paddingVertical: 18,
-    shadowColor: "#667eea",
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    shadowColor: "rgba(0, 0, 0, 0.04)",
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 2,
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
-    position: "relative",
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   inputContainerFocused: {
-    borderColor: "#667eea",
-    shadowColor: "#667eea",
-    shadowOpacity: 0.25,
-    shadowRadius: 12,
-    elevation: 8,
-    transform: [{ scale: 1.02 }],
+    borderColor: "#0052FF",
+    borderWidth: 2,
+    shadowColor: "rgba(0, 82, 255, 0.15)",
+    shadowOpacity: 1,
+    shadowRadius: 8,
+    elevation: 4,
   },
   inputContainerError: {
-    borderColor: "#FF6B6B",
-    shadowColor: "#FF6B6B",
+    borderColor: "#D73A49",
+    borderWidth: 2,
+    shadowColor: "rgba(215, 58, 73, 0.15)",
   },
   input: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "600",
-    color: "#333",
+    color: "#0A0B0D",
     padding: 0,
-    minHeight: 28,
+    minHeight: 32,
     textAlign: "center",
-    letterSpacing: 1,
+    letterSpacing: -0.5,
   },
   errorText: {
-    fontSize: 12,
-    color: "#FF6B6B",
-    marginTop: 6,
-    fontWeight: "600",
-    textAlign: "center",
+    fontSize: 14,
+    color: "#D73A49",
+    marginTop: 8,
+    fontWeight: "500",
+    textAlign: "left",
   },
 });

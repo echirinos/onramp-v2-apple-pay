@@ -6,8 +6,10 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   ScrollView,
+  Image,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { MaterialIcons } from "@expo/vector-icons";
 import OnrampApplePayButton from "./OnrampApplePayButton";
 import { CustomInput } from "./components/CustomInput";
 import { useState, useMemo } from "react";
@@ -22,12 +24,12 @@ const AppContent = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <LinearGradient
-        colors={["#667eea", "#764ba2", "#f093fb"]}
-        style={[styles.container, { paddingTop: insets.top }]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-      >
+          <LinearGradient
+      colors={["#0052FF", "#1652F0", "#0041CC"]}
+      style={[styles.container, { paddingTop: insets.top }]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+    >
         <StatusBar barStyle="light-content" />
 
         <ScrollView
@@ -37,16 +39,33 @@ const AppContent = () => {
         >
           {/* Header */}
           <View style={styles.header}>
-            <Text style={styles.title}>Crypto Onramp</Text>
-            <Text style={styles.subtitle}>Buy crypto with Apple Pay</Text>
+            <View style={styles.brandContainer}>
+              <View style={styles.coinbaseLogo}>
+                <Image 
+                  source={require("../assets/images.png")} 
+                  style={styles.coinbaseLogoImage}
+                  resizeMode="contain"
+                />
+              </View>
+              <Text style={styles.brandName}>Coinbase</Text>
+            </View>
+            <Text style={styles.title}>Buy crypto instantly</Text>
+            <Text style={styles.subtitle}>Purchase ETH with Apple Pay in seconds</Text>
           </View>
 
           {/* Main Content Card */}
           <View style={styles.card}>
             <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>💰 Purchase ETH</Text>
+              <View style={styles.cryptoIcon}>
+                <Image 
+                  source={require("../assets/kisspng-ethereum-blockchain-bitcoin-logo-see-you-there-5b2b2447696084.9131561015295539914316.jpg")} 
+                  style={styles.ethLogoImage}
+                  resizeMode="contain"
+                />
+              </View>
+              <Text style={styles.cardTitle}>Ethereum</Text>
               <Text style={styles.cardSubtitle}>
-                Enter the amount you'd like to buy
+                Enter amount to purchase
               </Text>
             </View>
 
@@ -102,92 +121,153 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
   },
   scrollContainer: {
     flexGrow: 1,
-    paddingBottom: 20,
+    paddingBottom: 24,
   },
   header: {
     alignItems: "center",
-    paddingVertical: 30,
-    paddingTop: 50,
+    paddingVertical: 32,
+    paddingTop: 40,
   },
-  title: {
-    fontSize: 32,
-    fontWeight: "bold",
-    color: "white",
-    textAlign: "center",
-    marginBottom: 8,
-    textShadowColor: "rgba(0, 0, 0, 0.3)",
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 4,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: "rgba(255, 255, 255, 0.9)",
-    textAlign: "center",
-    fontWeight: "500",
-  },
-  card: {
-    backgroundColor: "rgba(255, 255, 255, 0.95)",
-    borderRadius: 24,
-    padding: 24,
-    marginVertical: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 8,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 16,
-    elevation: 12,
-    backdropFilter: "blur(20px)",
-  },
-  cardHeader: {
+  brandContainer: {
+    flexDirection: "row",
     alignItems: "center",
     marginBottom: 24,
   },
-  cardTitle: {
+  coinbaseLogo: {
+    width: 32,
+    height: 32,
+    borderRadius: 8,
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 8,
+    shadowColor: "rgba(0, 0, 0, 0.1)",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  coinbaseLogoImage: {
+    width: 24,
+    height: 24,
+  },
+  logoText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#0052FF",
+  },
+  brandName: {
+    fontSize: 20,
+    fontWeight: "600",
+    color: "white",
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "700",
+    color: "white",
+    textAlign: "center",
+    marginBottom: 8,
+    letterSpacing: -0.5,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: "rgba(255, 255, 255, 0.8)",
+    textAlign: "center",
+    fontWeight: "400",
+  },
+  card: {
+    backgroundColor: "white",
+    borderRadius: 16,
+    padding: 24,
+    marginHorizontal: 0,
+    marginVertical: 16,
+    shadowColor: "rgba(0, 0, 0, 0.12)",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  cardHeader: {
+    alignItems: "center",
+    marginBottom: 32,
+  },
+  cryptoIcon: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: "transparent",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 16,
+    shadowColor: "rgba(0, 0, 0, 0.1)",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  ethLogoImage: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+  },
+  cryptoIconText: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#333",
-    marginBottom: 8,
+    color: "white",
+    textShadowColor: "rgba(0, 0, 0, 0.2)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
+  },
+  cardTitle: {
+    fontSize: 24,
+    fontWeight: "700",
+    color: "#0A0B0D",
+    marginBottom: 4,
+    letterSpacing: -0.5,
   },
   cardSubtitle: {
     fontSize: 16,
-    color: "#666",
+    color: "#5B616E",
     textAlign: "center",
+    fontWeight: "400",
   },
   conversionInfo: {
-    backgroundColor: "#f8f9fa",
-    borderRadius: 16,
-    padding: 16,
-    marginVertical: 16,
+    backgroundColor: "#F7F8FA",
+    borderRadius: 12,
+    padding: 20,
+    marginVertical: 20,
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "#e9ecef",
+    borderColor: "#E6EAEE",
   },
   conversionText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#667eea",
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#0A0B0D",
     marginBottom: 4,
   },
   conversionSubtext: {
     fontSize: 14,
-    color: "#6c757d",
+    color: "#5B616E",
     textAlign: "center",
+    fontWeight: "400",
   },
   footer: {
     alignItems: "center",
-    paddingVertical: 20,
+    paddingVertical: 24,
     marginTop: "auto",
   },
   footerText: {
     fontSize: 14,
-    color: "rgba(255, 255, 255, 0.8)",
+    color: "rgba(255, 255, 255, 0.7)",
     textAlign: "center",
-    fontWeight: "500",
+    fontWeight: "400",
   },
 });

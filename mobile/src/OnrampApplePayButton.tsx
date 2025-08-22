@@ -59,6 +59,14 @@ export default function OnrampApplePayButton({
       if (response.paymentLink) {
         setPaymentLink(response.paymentLink.url);
         setStatus("loading-payment");
+
+        // Fallback: if WebView doesn't emit ready event within 5 seconds, assume it's ready
+        setTimeout(() => {
+          if (status === "loading-payment") {
+            console.log("Fallback: Setting status to ready after timeout");
+            setStatus("ready");
+          }
+        }, 5000);
       }
     } catch (error) {
       console.error("Error creating order:", error);
@@ -126,14 +134,17 @@ export default function OnrampApplePayButton({
         </View>
       )}
 
-      {/* Status indicator */}
-      {status === "loading-payment" && (
-        <View style={styles.compactLoadingContainer}>
-          <ActivityIndicator size="small" color="#667eea" />
-          <Text style={styles.compactLoadingText}>Loading Apple Pay...</Text>
+      {/* Status indicator - overlay on top of WebView */}
+      {paymentLink && status === "loading-payment" && (
+        <View style={styles.loadingOverlayContainer}>
+          <View style={styles.compactLoadingContainer}>
+            <ActivityIndicator size="small" color="#667eea" />
+            <Text style={styles.compactLoadingText}>Loading Apple Pay...</Text>
+          </View>
         </View>
       )}
 
+      {/* WebView - always show when paymentLink exists */}
       {paymentLink && (
         <WebView
           ref={webViewRef}
@@ -236,6 +247,26 @@ export default function OnrampApplePayButton({
           }}
           source={{ uri: finalUrl }}
           startInLoadingState={true}
+          style={styles.webView}
+          injectedJavaScript={`
+            document.body.style.backgroundColor = 'transparent';
+            document.documentElement.style.backgroundColor = 'transparent';
+            true;
+          `}
+          onLoadEnd={() => {
+            // Ensure transparency after load
+            webViewRef.current?.injectJavaScript(`
+              document.body.style.backgroundColor = 'transparent';
+              document.documentElement.style.backgroundColor = 'transparent';
+              true;
+            `);
+
+            // Set to ready if still loading after WebView loads
+            if (status === "loading-payment") {
+              console.log("WebView loaded, setting status to ready");
+              setTimeout(() => setStatus("ready"), 500);
+            }
+          }}
         />
       )}
     </>
@@ -243,30 +274,39 @@ export default function OnrampApplePayButton({
 }
 
 const styles = {
+  loadingOverlayContainer: {
+    position: "absolute" as const,
+    top: 16,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 10,
+    alignItems: "center" as const,
+    justifyContent: "center" as const,
+  },
   compactLoadingContainer: {
     flexDirection: "row" as const,
     alignItems: "center" as const,
     justifyContent: "center" as const,
     padding: 16,
-    backgroundColor: "#f8f9fa",
+    backgroundColor: "#F7F8FA",
     borderRadius: 12,
-    marginTop: 16,
     borderWidth: 1,
-    borderColor: "#e9ecef",
+    borderColor: "#E6EAEE",
   },
   compactLoadingText: {
     marginLeft: 8,
     fontSize: 14,
     fontWeight: "500" as const,
-    color: "#667eea",
+    color: "#0052FF",
   },
   errorContainer: {
     alignItems: "center" as const,
     padding: 24,
-    backgroundColor: "#fff5f5",
-    borderRadius: 16,
+    backgroundColor: "#FDF2F2",
+    borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#fed7d7",
+    borderColor: "#F5C6CB",
   },
   errorIcon: {
     fontSize: 32,
@@ -274,23 +314,23 @@ const styles = {
   },
   errorTitle: {
     fontSize: 18,
-    fontWeight: "bold" as const,
-    color: "#e53e3e",
+    fontWeight: "600" as const,
+    color: "#D73A49",
     marginBottom: 8,
   },
   errorMessage: {
     fontSize: 14,
-    color: "#c53030",
+    color: "#721C24",
     textAlign: "center" as const,
     lineHeight: 20,
   },
   successContainer: {
     alignItems: "center" as const,
     padding: 24,
-    backgroundColor: "#f0fff4",
-    borderRadius: 16,
+    backgroundColor: "#F0F9FF",
+    borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#c6f6d5",
+    borderColor: "#B3E5FC",
   },
   successIcon: {
     fontSize: 32,
@@ -298,19 +338,19 @@ const styles = {
   },
   successTitle: {
     fontSize: 20,
-    fontWeight: "bold" as const,
-    color: "#22543d",
+    fontWeight: "600" as const,
+    color: "#0052FF",
     marginBottom: 8,
   },
   successMessage: {
     fontSize: 14,
-    color: "#2f855a",
+    color: "#1565C0",
     textAlign: "center" as const,
     marginBottom: 16,
     lineHeight: 20,
   },
   successBadge: {
-    backgroundColor: "#38a169",
+    backgroundColor: "#0052FF",
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
