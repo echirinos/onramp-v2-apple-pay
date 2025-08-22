@@ -14,6 +14,20 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Onramp Workshop Backend API',
+    version: '1.0.0',
+    endpoints: {
+      'GET /': 'This endpoint - API information',
+      'GET /health': 'Health check',
+      'POST /api/create-order': 'Create onramp order'
+    },
+    status: 'running'
+  });
+});
+
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', message: 'Backend server is running' });
 });
@@ -23,7 +37,7 @@ app.post("/api/create-order", async (req, res) => {
     const requestHost = "api.developer.coinbase.com";
     const requestPath = "/onramp/v2/onramp/order";
 
-    
+
     const token = await generateJwt({
       apiKeyId: process.env.CDP_API_KEY_ID!,
       apiKeySecret: process.env.CDP_API_KEY_SECRET!,
@@ -32,7 +46,7 @@ app.post("/api/create-order", async (req, res) => {
       requestPath: requestPath,
       expiresIn: 120 // optional (defaults to 120 seconds)
   });
-    
+
     const response = await fetch(
       `https://${requestHost}${requestPath}`,
       {
